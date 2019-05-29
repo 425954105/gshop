@@ -1,26 +1,26 @@
 <template>
   <footer class="footer_guide">
-    <a href="javascript:;" class="guide_item on">
+    <a href="javascript:;" class="guide_item" :class="{on:'/msite'===$route.path}" @click="goTo('/msite')">
       <span class="item_icon">
-        <i class="iconfont icon-waimai"></i>
+        <i class="iconfont iconwaimai"></i>
       </span>
       <span>外卖</span>
     </a>
-    <a href="javascript:;" class="guide_item">
+    <a href="javascript:;" class="guide_item" :class="{on:'/search'===$route.path}" @click="goTo('/search')">
       <span class="item_icon">
-        <i class="iconfont icon-search"></i>
+        <i class="iconfont iconyonghu"></i>
       </span>
       <span>搜索</span>
     </a>
-    <a href="javascript:;" class="guide_item">
+    <a href="javascript:;" class="guide_item" :class="{on:'/order'===$route.path}" @click="goTo('/order')">
       <span class="item_icon">
-        <i class="iconfont icon-dingdan"></i>
+        <i class="iconfont iconicon-order"></i>
       </span>
       <span>订单</span>
     </a>
-    <a href="javascript:;" class="guide_item">
+    <a href="javascript:;" class="guide_item" :class="{on:'/profile'===$route.path}" @click="goTo('/profile')">
       <span class="item_icon">
-        <i class="iconfont icon-geren"></i>
+        <i class="iconfont iconsousuo"></i>
       </span>
       <span>我的</span>
     </a>
@@ -33,13 +33,18 @@ export default {
   data() {
       return {}
   },
-  methods: {},
+  methods: {
+    goTo (path) {
+      this.$router.replace(path)
+    }
+  },
   computed: {},
   components: {}
 }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "../../common/stylus/mixins.styl"
   .footer_guide  //footer
     top-border-1px(#e4e4e4)
     position fixed
