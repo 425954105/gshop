@@ -1,6 +1,6 @@
 <template>
   <div class="shop_container">
-    <ul class="shop_list">
+    <ul class="shop_list" v-if="shops.length">
       <li class="shop_li border-1px" v-for="(shop, index) in shops" :key = "index">
         <a>
           <div class="shop_left">
@@ -35,13 +35,18 @@
             </section>
             <section class="shop_distance">
               <p class="shop_delivery_msg">
-                <span>¥20起送</span>
+                <span>¥{{shop.float_minimum_order_amount}}起送</span>
                 <span class="segmentation">/</span>
-                <span>配送费约¥5</span>
+                <span>{{shop.piecewise_agent_fee.tips}}</span>
               </p>
             </section>
           </div>
         </a>
+      </li>
+    </ul>
+    <ul>
+      <li v-for="item in 6">
+        <img src="./images/shop_back.svg" alt="">
       </li>
     </ul>
   </div>
