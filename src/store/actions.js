@@ -25,7 +25,7 @@ export default {
   },
 
   //异步获取食品分类列表
-  async getCategory () {
+  async getCategory ({commit}) {
     const result = await reqFoodCategorys()
     if (result.code === 0){
       const categorys = result.data

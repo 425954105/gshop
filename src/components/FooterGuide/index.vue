@@ -1,24 +1,24 @@
 <template>
   <footer class="footer_guide">
-    <a href="javascript:;" class="guide_item" :class="{on:'/msite'===$route.path}" @click="goTo('/msite')">
+    <a href="javascript:" class="guide_item" :class="{on:'/msite'===$route.path}" @click="goTo('/msite')">
       <span class="item_icon">
         <i class="iconfont iconwaimai"></i>
       </span>
       <span>外卖</span>
     </a>
-    <a href="javascript:;" class="guide_item" :class="{on:'/search'===$route.path}" @click="goTo('/search')">
+    <a href="javascript:" class="guide_item" :class="{on:'/search'===$route.path}" @click="goTo('/search')">
       <span class="item_icon">
         <i class="iconfont iconyonghu"></i>
       </span>
       <span>搜索</span>
     </a>
-    <a href="javascript:;" class="guide_item" :class="{on:'/order'===$route.path}" @click="goTo('/order')">
+    <a href="javascript:" class="guide_item" :class="{on:'/order'===$route.path}" @click="goTo('/order')">
       <span class="item_icon">
         <i class="iconfont iconicon-order"></i>
       </span>
       <span>订单</span>
     </a>
-    <a href="javascript:;" class="guide_item" :class="{on:'/profile'===$route.path}" @click="goTo('/profile')">
+    <a href="javascript:" class="guide_item" :class="{on:'/profile'===$route.path}" @click="goTo('/profile')">
       <span class="item_icon">
         <i class="iconfont iconsousuo"></i>
       </span>
