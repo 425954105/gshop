@@ -56,10 +56,12 @@
         <i class="iconfont iconfanhui"></i>
       </a>
     </div>
+    <alertTip :alertText="alertText" v-show="showAlert" @closeTip="closeTip"></alertTip>
   </section>
 </template>
 
 <script>
+  import alertTip from '../../components/alertTip'
   export default {
     name: 'Login',
     data() {
@@ -72,6 +74,8 @@
         name:'',//  用户名
         pwd:'',//  密码
         captcha:'',//  图形验证码
+        alertText:'',//  弹出框文本
+        showAlert:false,//  是否显示弹出框
       }
     },
     methods: {
@@ -93,33 +97,52 @@
           //  发送ajax请求（向指定手机号发送）
         }
       },
+      letAlert (msg) {
+        this.showAlert = true
+        this.alertText = msg
+      },
       login () {
         //  前台表单验证
         if (this.loginWay){
           const {rightPhone, phone, code} = this
           if (!this.rightPhone){
             //  手机号不正确
+            this.letAlert('手机号不正确')
           }else if(!/^\d{6}$/.test(code)) {
             //  验证码必须是六位数字
+            this.letAlert('验证码必须是六位数字')
           }
         }else{
           const {name, pwd, captcha} = this
           if (!this.name){
             //  用户名必须指定
+            this.letAlert('用户名必须指定')
+
           }else if(!/^\d{8}$/.test(pwd)) {
             //  密码必须是八位数字
+            this.letAlert('密码必须是八位数字')
+
           }else if(!this.captcha) {
-            //  验证码指定
+            //  验证码必须指定
+            this.letAlert('验证码必须指定')
+
           }
         }
-      }
+      },
+      closeTip () {
+        this.showAlert = false
+        this.alertText = ''
+
+      },
     },
     computed: {
       rightPhone() {
         return /^1\d{10}$/.test(this.phone)
       }
     },
-    components: {}
+    components: {
+      alertTip
+    }
   }
 </script>
 
