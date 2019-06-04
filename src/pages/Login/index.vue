@@ -44,7 +44,7 @@
               </section>
               <section class="login_message">
                 <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
-                <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                <img class="get_verification" src="http://localhost:4002/captcha" alt="captcha" @click="getCaptcha" ref="captcha">
               </section>
             </section>
           </div>
@@ -62,6 +62,7 @@
 
 <script>
   import alertTip from '../../components/alertTip'
+  import {reqPwdLogin, reqSendCode, reqSmsLogin} from '../../api'
   export default {
     name: 'Login',
     data() {
@@ -83,56 +84,100 @@
         this.$router.back()
       },
       //  异步获取短信验证码
-      getCode() {
+      async getCode() {
         //  如果当前没有计时
         if (!this.computeTime) {
           //  启动倒计时
           this.computeTime = 30
-          const intervalId = setInterval(() => {
+          this.intervalId = setInterval(() => {
             this.computeTime--
             if (this.computeTime <= 0) {
-              clearInterval(intervalId)
+              clearInterval(this.intervalId)
             }
           }, 1000)
           //  发送ajax请求（向指定手机号发送）
+          const result = await reqSendCode(this.phone)
+          if (result.code === 1){
+            //  显示提示
+            this.letAlert(result.msg)
+            //  停止计时
+            if (this.computeTime){
+              this.computeTime = 0
+              clearInterval(this.intervalId)
+              this.intervalId = undefined
+            }
+          }
         }
       },
       letAlert (msg) {
         this.showAlert = true
         this.alertText = msg
       },
-      login () {
+      async login () {
+        let result
         //  前台表单验证
         if (this.loginWay){
           const {rightPhone, phone, code} = this
           if (!this.rightPhone){
             //  手机号不正确
             this.letAlert('手机号不正确')
+            return
           }else if(!/^\d{6}$/.test(code)) {
             //  验证码必须是六位数字
             this.letAlert('验证码必须是六位数字')
+            return
           }
-        }else{
+          //  发送ajax请求短信登录
+          result = await reqSmsLogin(phone, code)
+
+        }else{//  密码登录
           const {name, pwd, captcha} = this
           if (!this.name){
             //  用户名必须指定
             this.letAlert('用户名必须指定')
-
-          }else if(!/^\d{8}$/.test(pwd)) {
-            //  密码必须是八位数字
-            this.letAlert('密码必须是八位数字')
-
+            return
+          }else if(!this.pwd) {
+            //  密码必须指定
+            this.letAlert('密码必须指定')
+            return
           }else if(!this.captcha) {
             //  验证码必须指定
             this.letAlert('验证码必须指定')
-
+            return
           }
+          //  发送ajax请求密码登录
+          result = await reqPwdLogin({name, pwd, captcha})
+        }
+
+        //  停止计时
+        if (this.computeTime){
+          this.computeTime = 0
+          clearInterval(this.intervalId)
+          this.intervalId = undefined
+        }
+
+        //  根据结果数据处理
+        if (result.code === 0) {
+          const user = result.data
+          //  将user保存到vuex的state中
+          this.$store.dispatch('recordUser', user)
+          //  跳转个人中心页面
+          this.$router.replace('/profile')
+        } else {
+          // 显示新的图片验证码
+          this.getCaptcha()
+          //  显示警告
+          const msg = result.msg
+          this.letAlert(msg)
         }
       },
       closeTip () {
         this.showAlert = false
         this.alertText = ''
 
+      },
+      getCaptcha () {
+        this.$refs.captcha.src = 'http://localhost:4002/captcha?time='+Date.now()
       },
     },
     computed: {
