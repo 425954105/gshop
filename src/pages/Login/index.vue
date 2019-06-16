@@ -53,8 +53,8 @@
         <a href="javascript:" class="about_us">关于我们</a>
       </div>
       <a href="javascript:" class="go_back" @click="goBack()">
-        <i class="iconfont iconfanhui"></i>
-      </a>
+      <i class="iconfont iconfanhui"></i>
+    </a>
     </div>
     <alertTip :alertText="alertText" v-show="showAlert" @closeTip="closeTip"></alertTip>
   </section>
@@ -167,7 +167,7 @@
           // 显示新的图片验证码
           this.getCaptcha()
           //  显示警告
-          const msg = result.msg
+          const msg =  result.msg
           this.letAlert(msg)
         }
       },

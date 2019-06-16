@@ -2,12 +2,13 @@
   <section class="msite">
     <!--首页头部-->
     <HeaderTop :title="address.name">
-      <span class="header_search" slot="left">
+      <router-link class="header_search" slot="left" to="/search">
         <i class="iconfont iconsousuo"></i>
-      </span>
-      <span class="header_login" slot="right">
-        <span class="header_login_text">登录|注册</span>
-      </span>
+      </router-link>
+      <router-link class="header_login" slot="right" :to="userInfo._id ? '/userinfo':'/login'">
+        <span v-if="!userInfo._id" class="header_login_text">登录|注册</span>
+        <span v-else class="header_login_text"><i class="iconfont iconyonghu2"></i></span>
+      </router-link>
     </HeaderTop>
     <!--首页导航-->
     <nav class="msite_nav">
@@ -59,7 +60,7 @@ import {mapState} from 'vuex'
     },
     methods: {},
     computed: {
-      ...mapState(['address', 'categorys']),
+      ...mapState(['address', 'categorys', 'userInfo']),
 
       categorysArr () {
         const {categorys} = this
