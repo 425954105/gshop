@@ -4,7 +4,10 @@ import {
   RECEIVE_CATEGORYS,
   RECEIVE_SHOPS,
   RECEIVE_USER_INFO,
-  RESET_USER_INFO
+  RESET_USER_INFO,
+  RECEIVE_GOODS,
+  RECEIVE_RATINGS,
+  RECEIVE_INFO
 } from './mutation-types'
 
 import {
@@ -12,7 +15,10 @@ import {
   reqFoodCategorys,
   reqShops,
   reqUserInfo,
-  reqLogOut
+  reqLogOut,
+  reqShopGoods,
+  reqShopRatings,
+  reqShopInfo
 } from '../api'
 
 export default {
@@ -65,5 +71,14 @@ export default {
     if (result.code === 0){
       commit(RESET_USER_INFO, {})
     }
-  }
+  },
+
+  //异步获取商家产品列表
+  async getShopGoods ({commit}) {
+    const result = await reqShopGoods()
+    if (result.code === 0){
+      const goods = result.data
+      commit(RECEIVE_GOODS, {goods})
+    }
+  },
 }

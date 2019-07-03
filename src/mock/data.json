@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "info": {
     "name": "嘉禾一品（温都水城）",
     "description": "硅谷专送",
@@ -1388,21 +1387,4 @@
       "recommend": []
     }
   ]
-=======
-    "goods":[
-        {
-            "name": "xxx",
-            "foods": [
-                {
-                    "name": "",
-                    "price": 9
-                }
-            ],
-            "ratings": [
-
-            ],
-            "info": {}
-        }
-    ]
->>>>>>> 3040e9d8e9a5d129956a0a2c0925b5bab3cb61ad
 }
