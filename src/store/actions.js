@@ -81,4 +81,20 @@ export default {
       commit(RECEIVE_GOODS, {goods})
     }
   },
+  //异步获取商家产品列表
+  async getShopRatings ({commit}) {
+    const result = await reqShopRatings()
+    if (result.code === 0){
+      const ratings = result.data
+      commit(RECEIVE_RATINGS, {ratings})
+    }
+  },
+  //异步获取商家产品列表
+  async getShopInfo ({commit}) {
+    const result = await reqShopInfo()
+    if (result.code === 0){
+      const info = result.data
+      commit(RECEIVE_INFO, {info})
+    }
+  },
 }
